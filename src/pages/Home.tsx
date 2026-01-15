@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -7,50 +7,14 @@ import { useToast } from "@/hooks/use-toast";
 
 const categories = ["Все", "Брендинг", "Digital", "E-commerce", "Полиграфия", "AI-дизайн"];
 
-const projects = [
-  {
-    id: 1,
-    title: "Корпоративный брендинг",
-    category: "Брендинг",
-    year: "2024",
-    image: "https://cdn.poehali.dev/projects/1c06e79a-d17f-433f-931a-411778323fcf/files/39a15c60-9fd7-44ce-a448-c287b112cd8b.jpg",
-  },
-  {
-    id: 2,
-    title: "Веб-дизайн для стартапа",
-    category: "Digital",
-    year: "2024",
-    image: "https://cdn.poehali.dev/projects/1c06e79a-d17f-433f-931a-411778323fcf/files/11f6a7f4-c435-4815-b587-856e162ea731.jpg",
-  },
-  {
-    id: 3,
-    title: "Карточки для маркетплейсов",
-    category: "E-commerce",
-    year: "2023",
-    image: "https://cdn.poehali.dev/projects/1c06e79a-d17f-433f-931a-411778323fcf/files/77312ea4-7af0-47bd-8f12-dcdc6e2710ea.jpg",
-  },
-  {
-    id: 4,
-    title: "Бизнес-презентация",
-    category: "Полиграфия",
-    year: "2024",
-    image: "https://cdn.poehali.dev/projects/1c06e79a-d17f-433f-931a-411778323fcf/files/39a15c60-9fd7-44ce-a448-c287b112cd8b.jpg",
-  },
-  {
-    id: 5,
-    title: "AI-иллюстрации для бренда",
-    category: "AI-дизайн",
-    year: "2024",
-    image: "https://cdn.poehali.dev/projects/1c06e79a-d17f-433f-931a-411778323fcf/files/11f6a7f4-c435-4815-b587-856e162ea731.jpg",
-  },
-  {
-    id: 6,
-    title: "Фирменный стиль",
-    category: "Брендинг",
-    year: "2023",
-    image: "https://cdn.poehali.dev/projects/1c06e79a-d17f-433f-931a-411778323fcf/files/77312ea4-7af0-47bd-8f12-dcdc6e2710ea.jpg",
-  },
-];
+interface Project {
+  id: number;
+  title: string;
+  category: string;
+  year: string;
+  image: string;
+  description?: string;
+}
 
 const services = [
   {
@@ -100,12 +64,30 @@ const stats = [
 export default function Home() {
   const { toast } = useToast();
   const [activeCategory, setActiveCategory] = useState("Все");
+  const [projects, setProjects] = useState<Project[]>([]);
+  const [loadingProjects, setLoadingProjects] = useState(true);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     phone: "",
     message: "",
   });
+
+  useEffect(() => {
+    fetchProjects();
+  }, []);
+
+  const fetchProjects = async () => {
+    try {
+      const response = await fetch('https://functions.poehali.dev/e8df9bb0-a41e-4d5a-bec5-e82a19344964');
+      const data = await response.json();
+      setProjects(data.projects || []);
+    } catch (error) {
+      console.error('Failed to fetch projects:', error);
+    } finally {
+      setLoadingProjects(false);
+    }
+  };
 
   const filteredProjects = activeCategory === "Все" 
     ? projects 

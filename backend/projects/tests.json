@@ -1,0 +1,29 @@
+{
+  "tests": [
+    {
+      "name": "Create new project",
+      "method": "POST",
+      "path": "/",
+      "body": {
+        "title": "Тестовый проект",
+        "category": "Брендинг",
+        "year": "2024",
+        "description": "Описание тестового проекта",
+        "image": "https://example.com/image.jpg"
+      },
+      "expectedStatus": 201
+    },
+    {
+      "name": "Get all projects",
+      "method": "GET",
+      "path": "/",
+      "expectedStatus": 200
+    },
+    {
+      "name": "Get projects by category",
+      "method": "GET",
+      "path": "/?category=Брендинг",
+      "expectedStatus": 200
+    }
+  ]
+}
