@@ -1,213 +1,158 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import { Card } from "@/components/ui/card";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
 import Icon from "@/components/ui/icon";
 
-interface Project {
+interface Contact {
   id: number;
-  title: string;
-  category: string;
-  description: string;
-  year: string;
-  images: string[];
+  name: string;
+  email: string;
+  phone: string;
+  message: string;
+  created_at: string;
 }
 
 export default function Admin() {
   const { toast } = useToast();
-  const [projects, setProjects] = useState<Project[]>([]);
-  const [formData, setFormData] = useState({
-    title: "",
-    category: "",
-    description: "",
-    year: new Date().getFullYear().toString(),
-    images: [] as string[],
-  });
+  const [contacts, setContacts] = useState<Contact[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const files = e.target.files;
-    if (files) {
-      const imageUrls = Array.from(files).map(file => URL.createObjectURL(file));
-      setFormData({ ...formData, images: [...formData.images, ...imageUrls] });
+  const fetchContacts = async () => {
+    try {
+      const response = await fetch('https://functions.poehali.dev/5fea0e5c-ce58-4850-b2a3-12e715d19e39');
+      const data = await response.json();
+      setContacts(data.contacts || []);
+    } catch (error) {
+      toast({
+        title: "Ошибка",
+        description: "Не удалось загрузить заявки",
+        variant: "destructive",
+      });
+    } finally {
+      setLoading(false);
     }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    const newProject: Project = {
-      id: Date.now(),
-      ...formData,
-    };
-    setProjects([...projects, newProject]);
-    setFormData({
-      title: "",
-      category: "",
-      description: "",
-      year: new Date().getFullYear().toString(),
-      images: [],
-    });
-    toast({
-      title: "Проект добавлен!",
-      description: "Новый проект успешно добавлен в портфолио.",
-    });
-  };
+  useEffect(() => {
+    fetchContacts();
+  }, []);
 
-  const handleDelete = (id: number) => {
-    setProjects(projects.filter(p => p.id !== id));
-    toast({
-      title: "Проект удалён",
-      description: "Проект был удалён из портфолио.",
-    });
+  const formatDate = (dateString: string) => {
+    const date = new Date(dateString);
+    return new Intl.DateTimeFormat('ru-RU', {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+    }).format(date);
   };
 
   return (
-    <div className="min-h-screen py-32 px-6 md:px-12 bg-muted/10">
+    <div className="min-h-screen py-32 px-6 md:px-12 bg-gradient-to-b from-muted/20 to-background">
       <div className="max-w-7xl mx-auto">
         <div className="flex items-center justify-between mb-12">
-          <h1 className="text-5xl font-light">Админ-панель</h1>
+          <div>
+            <h1 className="text-5xl font-bold mb-4">Админ-панель</h1>
+            <p className="text-xl text-muted-foreground">Заявки от клиентов</p>
+          </div>
           <Button variant="outline" onClick={() => window.location.href = '/'}>
             <Icon name="ArrowLeft" className="mr-2" size={20} />
             На сайт
           </Button>
         </div>
 
-        <div className="grid lg:grid-cols-2 gap-12">
-          <Card className="p-8">
-            <h2 className="text-2xl font-light mb-8">Добавить проект</h2>
-            
-            <form onSubmit={handleSubmit} className="space-y-6">
-              <div>
-                <label className="block text-sm mb-2">Название проекта</label>
-                <Input
-                  value={formData.title}
-                  onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-                  required
-                  placeholder="Минималистичный интерьер"
-                />
-              </div>
+        <div className="mb-8 flex items-center justify-between">
+          <div className="flex items-center gap-4">
+            <div className="px-4 py-2 bg-primary/10 text-primary rounded-lg font-medium">
+              Всего заявок: {contacts.length}
+            </div>
+          </div>
+          <Button onClick={fetchContacts} variant="outline">
+            <Icon name="RefreshCw" className="mr-2" size={18} />
+            Обновить
+          </Button>
+        </div>
 
-              <div>
-                <label className="block text-sm mb-2">Категория</label>
-                <Select value={formData.category} onValueChange={(value) => setFormData({ ...formData, category: value })}>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Выберите категорию" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="Брендинг">Брендинг</SelectItem>
-                    <SelectItem value="Digital">Digital</SelectItem>
-                    <SelectItem value="E-commerce">E-commerce</SelectItem>
-                    <SelectItem value="Полиграфия">Полиграфия</SelectItem>
-                    <SelectItem value="AI-дизайн">AI-дизайн</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-
-              <div>
-                <label className="block text-sm mb-2">Год</label>
-                <Input
-                  type="number"
-                  value={formData.year}
-                  onChange={(e) => setFormData({ ...formData, year: e.target.value })}
-                  required
-                  placeholder="2024"
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm mb-2">Описание</label>
-                <Textarea
-                  value={formData.description}
-                  onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                  required
-                  rows={4}
-                  placeholder="Краткое описание проекта..."
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm mb-2">Изображения</label>
-                <div className="border-2 border-dashed border-border rounded-lg p-8 text-center hover:border-primary transition-colors cursor-pointer">
-                  <input
-                    type="file"
-                    multiple
-                    accept="image/*"
-                    onChange={handleImageUpload}
-                    className="hidden"
-                    id="image-upload"
-                  />
-                  <label htmlFor="image-upload" className="cursor-pointer">
-                    <Icon name="Upload" size={32} className="mx-auto mb-4 text-muted-foreground" />
-                    <p className="text-muted-foreground">Нажмите для загрузки изображений</p>
-                    <p className="text-sm text-muted-foreground mt-2">PNG, JPG до 10MB</p>
-                  </label>
-                </div>
-                
-                {formData.images.length > 0 && (
-                  <div className="grid grid-cols-3 gap-4 mt-4">
-                    {formData.images.map((img, idx) => (
-                      <div key={idx} className="aspect-square bg-muted rounded overflow-hidden">
-                        <img src={img} alt="" className="w-full h-full object-cover" />
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </div>
-
-              <Button type="submit" size="lg" className="w-full">
-                <Icon name="Plus" className="mr-2" size={20} />
-                Добавить проект
-              </Button>
-            </form>
+        {loading ? (
+          <div className="flex items-center justify-center py-20">
+            <Icon name="Loader2" className="animate-spin text-primary" size={48} />
+          </div>
+        ) : contacts.length === 0 ? (
+          <Card className="p-12 text-center">
+            <Icon name="Inbox" className="mx-auto mb-4 text-muted-foreground" size={64} />
+            <h3 className="text-2xl font-semibold mb-2">Пока нет заявок</h3>
+            <p className="text-muted-foreground">Новые заявки появятся здесь</p>
           </Card>
-
-          <div>
-            <h2 className="text-2xl font-light mb-8">Список проектов ({projects.length})</h2>
-            <div className="space-y-4">
-              {projects.length === 0 ? (
-                <Card className="p-12 text-center">
-                  <Icon name="FolderOpen" size={48} className="mx-auto mb-4 text-muted-foreground" />
-                  <p className="text-muted-foreground">Пока нет добавленных проектов</p>
-                </Card>
-              ) : (
-                projects.map((project) => (
-                  <Card key={project.id} className="p-6">
-                    <div className="flex gap-4">
-                      {project.images[0] && (
-                        <div className="w-24 h-24 bg-muted rounded overflow-hidden flex-shrink-0">
-                          <img src={project.images[0]} alt="" className="w-full h-full object-cover" />
-                        </div>
-                      )}
-                      
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-start justify-between mb-2">
-                          <div>
-                            <h3 className="font-medium mb-1">{project.title}</h3>
-                            <p className="text-sm text-muted-foreground">
-                              {project.category} • {project.year}
-                            </p>
-                          </div>
-                          <Button
-                            variant="ghost"
-                            size="icon"
-                            onClick={() => handleDelete(project.id)}
-                          >
-                            <Icon name="Trash2" size={18} />
-                          </Button>
-                        </div>
-                        <p className="text-sm text-muted-foreground line-clamp-2">
-                          {project.description}
+        ) : (
+          <div className="space-y-4">
+            {contacts.map((contact) => (
+              <Card key={contact.id} className="p-6 hover:shadow-lg transition-shadow">
+                <div className="flex items-start justify-between mb-4">
+                  <div className="flex-1">
+                    <div className="flex items-center gap-3 mb-2">
+                      <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+                        <Icon name="User" size={20} className="text-primary" />
+                      </div>
+                      <div>
+                        <h3 className="text-xl font-semibold">{contact.name}</h3>
+                        <p className="text-sm text-muted-foreground">
+                          {formatDate(contact.created_at)}
                         </p>
                       </div>
                     </div>
-                  </Card>
-                ))
-              )}
-            </div>
+                  </div>
+                </div>
+
+                <div className="space-y-3 mb-4">
+                  <div className="flex items-center gap-3">
+                    <Icon name="Mail" size={18} className="text-muted-foreground" />
+                    <a href={`mailto:${contact.email}`} className="text-primary hover:underline">
+                      {contact.email}
+                    </a>
+                  </div>
+
+                  {contact.phone && (
+                    <div className="flex items-center gap-3">
+                      <Icon name="Phone" size={18} className="text-muted-foreground" />
+                      <a href={`tel:${contact.phone}`} className="text-primary hover:underline">
+                        {contact.phone}
+                      </a>
+                    </div>
+                  )}
+                </div>
+
+                <div className="p-4 bg-muted/30 rounded-lg">
+                  <div className="flex items-start gap-2 mb-2">
+                    <Icon name="MessageSquare" size={18} className="text-muted-foreground mt-0.5 flex-shrink-0" />
+                    <p className="font-medium">Сообщение:</p>
+                  </div>
+                  <p className="text-muted-foreground leading-relaxed pl-6">
+                    {contact.message}
+                  </p>
+                </div>
+
+                <div className="flex gap-3 mt-4">
+                  <Button size="sm" className="flex-1" asChild>
+                    <a href={`mailto:${contact.email}`}>
+                      <Icon name="Mail" className="mr-2" size={16} />
+                      Ответить на почту
+                    </a>
+                  </Button>
+                  {contact.phone && (
+                    <Button size="sm" variant="outline" className="flex-1" asChild>
+                      <a href={`tel:${contact.phone}`}>
+                        <Icon name="Phone" className="mr-2" size={16} />
+                        Позвонить
+                      </a>
+                    </Button>
+                  )}
+                </div>
+              </Card>
+            ))}
           </div>
-        </div>
+        )}
       </div>
     </div>
   );

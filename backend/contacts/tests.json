@@ -1,0 +1,31 @@
+{
+  "tests": [
+    {
+      "name": "Create new contact",
+      "method": "POST",
+      "path": "/",
+      "body": {
+        "name": "Иван Петров",
+        "email": "ivan@example.com",
+        "phone": "+7 (999) 123-45-67",
+        "message": "Хочу заказать сайт для своего бизнеса"
+      },
+      "expectedStatus": 201
+    },
+    {
+      "name": "Get contacts list",
+      "method": "GET",
+      "path": "/",
+      "expectedStatus": 200
+    },
+    {
+      "name": "Validation error - missing fields",
+      "method": "POST",
+      "path": "/",
+      "body": {
+        "name": "Test"
+      },
+      "expectedStatus": 400
+    }
+  ]
+}
