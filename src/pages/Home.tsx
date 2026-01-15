@@ -122,35 +122,52 @@ export default function Home() {
 
   return (
     <div className="min-h-screen">
-      <section id="hero" className="min-h-screen flex items-center justify-center px-6 md:px-12">
-        <div className="max-w-6xl w-full">
-          <h1 className="text-6xl md:text-8xl font-light tracking-tight mb-8">
+      <section id="hero" className="relative min-h-screen flex items-center justify-center px-6 md:px-12 overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5"></div>
+        <div className="max-w-6xl w-full relative z-10">
+          <div className="inline-block mb-6 px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium">
+            ✨ Дизайн-студия полного цикла
+          </div>
+          <h1 className="text-7xl md:text-9xl font-bold tracking-tight mb-8 bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text text-transparent">
             Forma
           </h1>
-          <p className="text-xl md:text-2xl text-muted-foreground max-w-2xl font-light mb-8">
+          <p className="text-2xl md:text-3xl text-foreground max-w-2xl font-medium mb-6">
             Берём любую задачу по дизайну и делаем под ключ
           </p>
-          <p className="text-lg text-muted-foreground max-w-2xl font-light">
+          <p className="text-lg md:text-xl text-muted-foreground max-w-2xl leading-relaxed">
             Нужен сайт? Сделаем. Нужны прайсы, презентации и карточки для маркетплейсов? 
             Сделаем всё в одном стиле. Верстаем, оформляем, обрабатываем. Быстро и в цель.
           </p>
-          <Button 
-            className="mt-12 px-8 py-6 text-lg"
-            onClick={() => document.getElementById('portfolio')?.scrollIntoView({ behavior: 'smooth' })}
-          >
-            Смотреть работы
-            <Icon name="ArrowDown" className="ml-2" size={20} />
-          </Button>
+          <div className="flex flex-wrap gap-4 mt-12">
+            <Button 
+              size="lg"
+              className="px-8 py-6 text-base shadow-lg hover:shadow-xl transition-all"
+              onClick={() => document.getElementById('portfolio')?.scrollIntoView({ behavior: 'smooth' })}
+            >
+              Смотреть работы
+              <Icon name="ArrowRight" className="ml-2" size={20} />
+            </Button>
+            <Button 
+              size="lg"
+              variant="outline"
+              className="px-8 py-6 text-base"
+              onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
+            >
+              Связаться с нами
+            </Button>
+          </div>
         </div>
       </section>
 
-      <section className="py-20 px-6 md:px-12 bg-muted/30">
+      <section className="py-24 px-6 md:px-12 bg-gradient-to-b from-muted/30 to-background">
         <div className="max-w-7xl mx-auto">
-          <div className="grid md:grid-cols-3 gap-12 text-center">
+          <div className="grid md:grid-cols-3 gap-16 text-center">
             {stats.map((stat, index) => (
-              <div key={index}>
-                <div className="text-5xl font-light mb-4">{stat.value}</div>
-                <p className="text-muted-foreground">{stat.label}</p>
+              <div key={index} className="group">
+                <div className="text-6xl md:text-7xl font-bold mb-4 bg-gradient-to-br from-primary to-accent bg-clip-text text-transparent group-hover:scale-110 transition-transform">
+                  {stat.value}
+                </div>
+                <p className="text-muted-foreground text-lg">{stat.label}</p>
               </div>
             ))}
           </div>
@@ -159,15 +176,20 @@ export default function Home() {
 
       <section id="portfolio" className="py-32 px-6 md:px-12">
         <div className="max-w-7xl mx-auto">
-          <h2 className="text-5xl md:text-7xl font-light mb-12">Портфолио</h2>
+          <div className="flex items-end justify-between mb-16">
+            <div>
+              <h2 className="text-5xl md:text-7xl font-bold mb-4">Портфолио</h2>
+              <p className="text-xl text-muted-foreground">Наши последние работы</p>
+            </div>
+          </div>
           
-          <div className="flex flex-wrap gap-4 mb-16">
+          <div className="flex flex-wrap gap-3 mb-16">
             {categories.map((category) => (
               <Button
                 key={category}
                 variant={activeCategory === category ? "default" : "outline"}
                 onClick={() => setActiveCategory(category)}
-                className="px-6"
+                className="px-6 rounded-full transition-all hover:scale-105"
               >
                 {category}
               </Button>
@@ -180,17 +202,17 @@ export default function Home() {
                 key={project.id} 
                 className="group cursor-pointer"
               >
-                <div className="aspect-[4/5] bg-muted mb-6 overflow-hidden">
+                <div className="aspect-[4/5] bg-muted mb-6 overflow-hidden rounded-2xl shadow-lg hover:shadow-2xl transition-all">
                   <img 
                     src={project.image} 
                     alt={project.title}
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                   />
                 </div>
-                <div className="flex justify-between items-start">
+                <div className="flex justify-between items-start px-2">
                   <div>
-                    <p className="text-sm text-muted-foreground mb-2">{project.category}</p>
-                    <h3 className="text-xl font-light">{project.title}</h3>
+                    <p className="text-sm text-primary font-medium mb-2">{project.category}</p>
+                    <h3 className="text-xl font-semibold group-hover:text-primary transition-colors">{project.title}</h3>
                   </div>
                   <span className="text-sm text-muted-foreground">{project.year}</span>
                 </div>
@@ -200,28 +222,35 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="services" className="py-32 px-6 md:px-12 bg-muted/30">
+      <section id="services" className="py-32 px-6 md:px-12 bg-gradient-to-b from-background to-muted/20">
         <div className="max-w-7xl mx-auto">
-          <h2 className="text-5xl md:text-7xl font-light mb-12">Наши навыки</h2>
+          <div className="text-center mb-20">
+            <h2 className="text-5xl md:text-7xl font-bold mb-6">Наши навыки</h2>
+            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+              Полный спектр дизайн-услуг для вашего бизнеса
+            </p>
+          </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {services.map((service, index) => (
               <div 
                 key={index} 
-                className="p-8 bg-background hover:shadow-lg transition-shadow"
+                className="group p-8 bg-card rounded-2xl border border-border hover:border-primary hover:shadow-xl transition-all duration-300"
               >
-                <div className="w-12 h-12 bg-primary text-primary-foreground flex items-center justify-center mb-6">
-                  <Icon name={service.icon} size={24} />
+                <div className="w-14 h-14 bg-gradient-to-br from-primary to-accent text-primary-foreground flex items-center justify-center rounded-xl mb-6 group-hover:scale-110 transition-transform shadow-md">
+                  <Icon name={service.icon} size={28} />
                 </div>
-                <h3 className="text-2xl font-light mb-4">{service.title}</h3>
+                <h3 className="text-2xl font-semibold mb-4 group-hover:text-primary transition-colors">{service.title}</h3>
                 <p className="text-muted-foreground mb-6 leading-relaxed">
                   {service.description}
                 </p>
-                <ul className="space-y-2">
+                <ul className="space-y-3">
                   {service.features.map((feature, idx) => (
-                    <li key={idx} className="flex items-start gap-2 text-sm text-muted-foreground">
-                      <Icon name="Check" size={16} className="text-primary mt-0.5 flex-shrink-0" />
-                      <span>{feature}</span>
+                    <li key={idx} className="flex items-start gap-3 text-sm">
+                      <div className="w-5 h-5 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0 mt-0.5">
+                        <Icon name="Check" size={14} className="text-primary" />
+                      </div>
+                      <span className="text-muted-foreground">{feature}</span>
                     </li>
                   ))}
                 </ul>
@@ -233,114 +262,146 @@ export default function Home() {
 
       <section id="about" className="py-32 px-6 md:px-12">
         <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-5xl md:text-7xl font-light mb-12">О студии</h2>
-          <p className="text-xl text-muted-foreground leading-relaxed mb-8">
+          <h2 className="text-5xl md:text-7xl font-bold mb-12">О студии</h2>
+          <p className="text-xl md:text-2xl text-muted-foreground leading-relaxed mb-8">
             Forma — это команда дизайнеров, которые работают на результат. 
             Мы не просто делаем красиво — мы создаём инструменты для вашего бизнеса.
           </p>
-          <p className="text-xl text-muted-foreground leading-relaxed">
+          <p className="text-xl md:text-2xl text-muted-foreground leading-relaxed">
             Наш подход: быстро погружаемся в задачу, работаем в едином стиле, 
             делаем всё под ключ. От первого макета до финальной вёрстки.
           </p>
         </div>
       </section>
 
-      <section id="contact" className="py-32 px-6 md:px-12 bg-muted/30">
+      <section id="contact" className="py-32 px-6 md:px-12 bg-gradient-to-b from-muted/20 to-background">
         <div className="max-w-7xl mx-auto">
-          <h2 className="text-5xl md:text-7xl font-light mb-32">Контакты</h2>
+          <h2 className="text-5xl md:text-7xl font-bold mb-20 text-center">Контакты</h2>
 
-          <div className="grid md:grid-cols-2 gap-20">
-            <div>
-              <h3 className="text-3xl font-light mb-12">Свяжитесь с нами</h3>
+          <div className="grid md:grid-cols-2 gap-16">
+            <div className="bg-card rounded-2xl p-10 border border-border shadow-lg">
+              <h3 className="text-3xl font-semibold mb-8">Свяжитесь с нами</h3>
               
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div>
+                  <label className="block text-sm font-medium mb-2">Ваше имя</label>
                   <Input
-                    placeholder="Ваше имя"
+                    placeholder="Иван Иванов"
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                     required
-                    className="border-0 border-b rounded-none px-0 focus-visible:ring-0"
+                    className="h-12"
                   />
                 </div>
                 
                 <div>
+                  <label className="block text-sm font-medium mb-2">Email</label>
                   <Input
                     type="email"
-                    placeholder="Email"
+                    placeholder="ivan@example.com"
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                     required
-                    className="border-0 border-b rounded-none px-0 focus-visible:ring-0"
+                    className="h-12"
                   />
                 </div>
                 
                 <div>
+                  <label className="block text-sm font-medium mb-2">Телефон</label>
                   <Input
                     type="tel"
-                    placeholder="Телефон"
+                    placeholder="+7 (999) 123-45-67"
                     value={formData.phone}
                     onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                    className="border-0 border-b rounded-none px-0 focus-visible:ring-0"
+                    className="h-12"
                   />
                 </div>
                 
                 <div>
+                  <label className="block text-sm font-medium mb-2">Расскажите о вашей задаче</label>
                   <Textarea
-                    placeholder="Расскажите о вашей задаче"
+                    placeholder="Опишите, что вам нужно..."
                     value={formData.message}
                     onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                     required
                     rows={6}
-                    className="border-0 border-b rounded-none px-0 focus-visible:ring-0 resize-none"
+                    className="resize-none"
                   />
                 </div>
                 
-                <Button type="submit" size="lg" className="w-full md:w-auto px-12">
+                <Button type="submit" size="lg" className="w-full shadow-lg hover:shadow-xl transition-all">
                   Отправить заявку
+                  <Icon name="Send" className="ml-2" size={18} />
                 </Button>
               </form>
             </div>
 
-            <div className="space-y-12">
-              <div>
-                <h4 className="text-2xl font-light mb-8">Контактная информация</h4>
-                <div className="space-y-6 text-muted-foreground">
-                  <div className="flex gap-4">
-                    <Icon name="Mail" size={24} className="flex-shrink-0" />
-                    <p>hello@forma.design</p>
+            <div className="space-y-10">
+              <div className="bg-card rounded-2xl p-8 border border-border">
+                <h4 className="text-2xl font-semibold mb-6 flex items-center gap-3">
+                  <Icon name="MapPin" size={24} className="text-primary" />
+                  Контактная информация
+                </h4>
+                <div className="space-y-5">
+                  <div className="flex gap-4 items-start">
+                    <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
+                      <Icon name="Mail" size={20} className="text-primary" />
+                    </div>
+                    <div>
+                      <p className="font-medium mb-1">Email</p>
+                      <p className="text-muted-foreground">hello@forma.design</p>
+                    </div>
                   </div>
                   
-                  <div className="flex gap-4">
-                    <Icon name="Phone" size={24} className="flex-shrink-0" />
-                    <p>+7 (495) 123-45-67</p>
+                  <div className="flex gap-4 items-start">
+                    <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
+                      <Icon name="Phone" size={20} className="text-primary" />
+                    </div>
+                    <div>
+                      <p className="font-medium mb-1">Телефон</p>
+                      <p className="text-muted-foreground">+7 (495) 123-45-67</p>
+                    </div>
                   </div>
                   
-                  <div className="flex gap-4">
-                    <Icon name="MessageCircle" size={24} className="flex-shrink-0" />
-                    <p>Telegram: @forma_design</p>
+                  <div className="flex gap-4 items-start">
+                    <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
+                      <Icon name="MessageCircle" size={20} className="text-primary" />
+                    </div>
+                    <div>
+                      <p className="font-medium mb-1">Telegram</p>
+                      <p className="text-muted-foreground">@forma_design</p>
+                    </div>
                   </div>
                 </div>
               </div>
 
-              <div>
-                <h4 className="text-2xl font-light mb-8">Время работы</h4>
+              <div className="bg-card rounded-2xl p-8 border border-border">
+                <h4 className="text-2xl font-semibold mb-6 flex items-center gap-3">
+                  <Icon name="Clock" size={24} className="text-primary" />
+                  Время работы
+                </h4>
                 <div className="space-y-3 text-muted-foreground">
-                  <p>Понедельник — Пятница: 10:00 — 19:00</p>
-                  <p>Суббота — Воскресенье: По договорённости</p>
+                  <p className="flex justify-between">
+                    <span>Понедельник — Пятница</span>
+                    <span className="font-medium">10:00 — 19:00</span>
+                  </p>
+                  <p className="flex justify-between">
+                    <span>Суббота — Воскресенье</span>
+                    <span className="font-medium">По договорённости</span>
+                  </p>
                 </div>
               </div>
 
-              <div>
-                <h4 className="text-2xl font-light mb-8">Социальные сети</h4>
-                <div className="flex gap-6">
-                  <a href="#" className="hover:text-primary transition-colors">
+              <div className="bg-card rounded-2xl p-8 border border-border">
+                <h4 className="text-2xl font-semibold mb-6">Социальные сети</h4>
+                <div className="flex gap-4">
+                  <a href="#" className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-all">
                     <Icon name="Instagram" size={24} />
                   </a>
-                  <a href="#" className="hover:text-primary transition-colors">
+                  <a href="#" className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-all">
                     <Icon name="Linkedin" size={24} />
                   </a>
-                  <a href="#" className="hover:text-primary transition-colors">
+                  <a href="#" className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-all">
                     <Icon name="Send" size={24} />
                   </a>
                 </div>

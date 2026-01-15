@@ -19,9 +19,8 @@ export default function Navigation() {
   const links = [
     { id: "hero", label: "Главная" },
     { id: "portfolio", label: "Портфолио" },
-    { id: "about", label: "О студии" },
     { id: "services", label: "Услуги" },
-    { id: "blog", label: "Блог" },
+    { id: "about", label: "О студии" },
     { id: "contact", label: "Контакты" },
   ];
 
@@ -30,7 +29,7 @@ export default function Navigation() {
       <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-border">
         <div className="max-w-7xl mx-auto px-6 md:px-12">
           <div className="flex items-center justify-between h-20">
-            <Link to="/" className="text-2xl font-light tracking-tight">
+            <Link to="/" className="text-2xl font-bold tracking-tight">
               Forma
             </Link>
             <Button variant="outline" size="sm" asChild>
@@ -49,7 +48,7 @@ export default function Navigation() {
     <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-border">
       <div className="max-w-7xl mx-auto px-6 md:px-12">
         <div className="flex items-center justify-between h-20">
-          <Link to="/" className="text-2xl font-light tracking-tight">
+          <Link to="/" className="text-2xl font-bold tracking-tight">
             Forma
           </Link>
 
@@ -58,7 +57,7 @@ export default function Navigation() {
               <button
                 key={link.id}
                 onClick={() => scrollToSection(link.id)}
-                className="text-sm transition-colors hover:text-primary text-muted-foreground"
+                className="text-sm font-medium transition-colors hover:text-primary text-muted-foreground relative after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 after:bg-primary after:transition-all hover:after:w-full"
               >
                 {link.label}
               </button>
