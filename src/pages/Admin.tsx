@@ -96,10 +96,11 @@ export default function Admin() {
                     <SelectValue placeholder="Выберите категорию" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="Интерьер">Интерьер</SelectItem>
                     <SelectItem value="Брендинг">Брендинг</SelectItem>
                     <SelectItem value="Digital">Digital</SelectItem>
-                    <SelectItem value="Архитектура">Архитектура</SelectItem>
+                    <SelectItem value="E-commerce">E-commerce</SelectItem>
+                    <SelectItem value="Полиграфия">Полиграфия</SelectItem>
+                    <SelectItem value="AI-дизайн">AI-дизайн</SelectItem>
                   </SelectContent>
                 </Select>
               </div>

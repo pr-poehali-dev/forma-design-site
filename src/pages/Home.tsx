@@ -5,112 +5,96 @@ import { Textarea } from "@/components/ui/textarea";
 import Icon from "@/components/ui/icon";
 import { useToast } from "@/hooks/use-toast";
 
-const categories = ["Все", "Интерьер", "Брендинг", "Digital", "Архитектура"];
+const categories = ["Все", "Брендинг", "Digital", "E-commerce", "Полиграфия", "AI-дизайн"];
 
 const projects = [
   {
     id: 1,
-    title: "Минималистичный интерьер",
-    category: "Интерьер",
-    year: "2024",
-    image: "https://cdn.poehali.dev/projects/1c06e79a-d17f-433f-931a-411778323fcf/files/77312ea4-7af0-47bd-8f12-dcdc6e2710ea.jpg",
-  },
-  {
-    id: 2,
     title: "Корпоративный брендинг",
     category: "Брендинг",
     year: "2024",
     image: "https://cdn.poehali.dev/projects/1c06e79a-d17f-433f-931a-411778323fcf/files/39a15c60-9fd7-44ce-a448-c287b112cd8b.jpg",
   },
   {
-    id: 3,
+    id: 2,
     title: "Веб-дизайн для стартапа",
     category: "Digital",
-    year: "2023",
+    year: "2024",
     image: "https://cdn.poehali.dev/projects/1c06e79a-d17f-433f-931a-411778323fcf/files/11f6a7f4-c435-4815-b587-856e162ea731.jpg",
   },
   {
-    id: 4,
-    title: "Жилой комплекс",
-    category: "Архитектура",
+    id: 3,
+    title: "Карточки для маркетплейсов",
+    category: "E-commerce",
     year: "2023",
     image: "https://cdn.poehali.dev/projects/1c06e79a-d17f-433f-931a-411778323fcf/files/77312ea4-7af0-47bd-8f12-dcdc6e2710ea.jpg",
   },
   {
-    id: 5,
-    title: "Офисное пространство",
-    category: "Интерьер",
+    id: 4,
+    title: "Бизнес-презентация",
+    category: "Полиграфия",
     year: "2024",
     image: "https://cdn.poehali.dev/projects/1c06e79a-d17f-433f-931a-411778323fcf/files/39a15c60-9fd7-44ce-a448-c287b112cd8b.jpg",
   },
   {
+    id: 5,
+    title: "AI-иллюстрации для бренда",
+    category: "AI-дизайн",
+    year: "2024",
+    image: "https://cdn.poehali.dev/projects/1c06e79a-d17f-433f-931a-411778323fcf/files/11f6a7f4-c435-4815-b587-856e162ea731.jpg",
+  },
+  {
     id: 6,
-    title: "Айдентика бренда",
+    title: "Фирменный стиль",
     category: "Брендинг",
     year: "2023",
-    image: "https://cdn.poehali.dev/projects/1c06e79a-d17f-433f-931a-411778323fcf/files/11f6a7f4-c435-4815-b587-856e162ea731.jpg",
+    image: "https://cdn.poehali.dev/projects/1c06e79a-d17f-433f-931a-411778323fcf/files/77312ea4-7af0-47bd-8f12-dcdc6e2710ea.jpg",
   },
 ];
 
 const services = [
   {
-    title: "Дизайн интерьера",
-    description: "Создание функциональных и эстетичных жилых и коммерческих пространств с акцентом на минимализм и удобство.",
-    features: ["Концепция и планировка", "3D-визуализация", "Авторский надзор", "Подбор материалов"],
-    icon: "Home",
+    title: "Брендинг и айдентика",
+    description: "Создаём узнаваемые бренды с нуля: от нейминга и логотипа до полноценных гайдлайнов и фирменного стиля.",
+    features: ["Нейминг и логотип", "Фирменный стиль", "Брендбук и гайдлайны", "Упаковка продукта"],
+    icon: "Sparkles",
   },
   {
-    title: "Архитектура",
-    description: "Проектирование зданий и сооружений с учётом современных тенденций и экологических стандартов.",
-    features: ["Архитектурная концепция", "Рабочая документация", "Согласование проекта", "Строительный надзор"],
-    icon: "Building2",
-  },
-  {
-    title: "Брендинг",
-    description: "Разработка визуальной идентичности бренда от логотипа до полного фирменного стиля.",
-    features: ["Логотип и айдентика", "Фирменный стиль", "Брендбук", "Упаковка"],
-    icon: "Palette",
-  },
-  {
-    title: "Digital-дизайн",
-    description: "Создание современных веб-сайтов и цифровых продуктов с фокусом на пользовательский опыт.",
-    features: ["UX/UI дизайн", "Веб-сайты", "Мобильные приложения", "Прототипирование"],
+    title: "Digital-продукты",
+    description: "Разрабатываем сайты и интерфейсы на Tilda, Webflow или чистым кодом. Адаптивная вёрстка и продуманный UX/UI.",
+    features: ["Дизайн сайтов", "UI/UX интерфейсы", "Мобильные приложения", "Адаптивная вёрстка"],
     icon: "Monitor",
   },
-];
-
-const blogPosts = [
   {
-    id: 1,
-    title: "Минимализм в современном интерьере",
-    excerpt: "Как создать функциональное пространство, используя принципы минимализма и не жертвуя комфортом.",
-    date: "15 января 2024",
-    category: "Интерьер",
-    readTime: "5 мин",
+    title: "Презентации и каталоги",
+    description: "Создаём впечатляющие презентационные материалы: инвест-питчи, бизнес-презентации, каталоги и прайс-листы.",
+    features: ["Инвест-питчи", "Бизнес-презентации", "Каталоги продукции", "Прайс-листы"],
+    icon: "FileText",
   },
   {
-    id: 2,
-    title: "Тренды архитектуры 2024",
-    excerpt: "Разбираем ключевые направления в современной архитектуре и их влияние на городскую среду.",
-    date: "10 января 2024",
-    category: "Архитектура",
-    readTime: "7 мин",
+    title: "Дизайн для e-commerce",
+    description: "Полный цикр для маркетплейсов: карточки Wildberries/Ozon, промо-лендинги, email-рассылки, креативы для таргета.",
+    features: ["Карточки WB/Ozon", "Промо-лендинги", "Email-рассылки", "Креативы для рекламы"],
+    icon: "ShoppingBag",
   },
   {
-    id: 3,
-    title: "Психология цвета в брендинге",
-    excerpt: "Как правильно выбрать цветовую палитру для бренда и почему это так важно для восприятия.",
-    date: "5 января 2024",
-    category: "Брендинг",
-    readTime: "6 мин",
+    title: "Полиграфия и упаковка",
+    description: "Разрабатываем полиграфическую продукцию любой сложности: от визиток до дизайна упаковки.",
+    features: ["Визитки и буклеты", "Листовки и флаеры", "Дизайн упаковки", "Брендированная продукция"],
+    icon: "Package",
+  },
+  {
+    title: "Генеративный и AI-дизайн",
+    description: "Используем нейросети для создания уникальных иллюстраций, обработки фото, генерации контента.",
+    features: ["AI-иллюстрации", "Обработка фото", "Генерация контента", "Уникальные визуалы"],
+    icon: "Wand2",
   },
 ];
 
-const team = [
-  { name: "Анна Иванова", role: "Арт-директор", experience: "12 лет" },
-  { name: "Михаил Петров", role: "Главный архитектор", experience: "15 лет" },
-  { name: "Елена Смирнова", role: "Дизайнер интерьеров", experience: "8 лет" },
-  { name: "Дмитрий Козлов", role: "Бренд-стратег", experience: "10 лет" },
+const stats = [
+  { value: "200+", label: "Реализованных проектов" },
+  { value: "5 лет", label: "На рынке" },
+  { value: "48 ч", label: "Средний срок разработки" },
 ];
 
 export default function Home() {
@@ -143,8 +127,12 @@ export default function Home() {
           <h1 className="text-6xl md:text-8xl font-light tracking-tight mb-8">
             Forma
           </h1>
-          <p className="text-xl md:text-2xl text-muted-foreground max-w-2xl font-light">
-            Студия дизайна, создающая пространства и бренды с фокусом на чистоту форм и функциональность
+          <p className="text-xl md:text-2xl text-muted-foreground max-w-2xl font-light mb-8">
+            Берём любую задачу по дизайну и делаем под ключ
+          </p>
+          <p className="text-lg text-muted-foreground max-w-2xl font-light">
+            Нужен сайт? Сделаем. Нужны прайсы, презентации и карточки для маркетплейсов? 
+            Сделаем всё в одном стиле. Верстаем, оформляем, обрабатываем. Быстро и в цель.
           </p>
           <Button 
             className="mt-12 px-8 py-6 text-lg"
@@ -153,6 +141,19 @@ export default function Home() {
             Смотреть работы
             <Icon name="ArrowDown" className="ml-2" size={20} />
           </Button>
+        </div>
+      </section>
+
+      <section className="py-20 px-6 md:px-12 bg-muted/30">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid md:grid-cols-3 gap-12 text-center">
+            {stats.map((stat, index) => (
+              <div key={index}>
+                <div className="text-5xl font-light mb-4">{stat.value}</div>
+                <p className="text-muted-foreground">{stat.label}</p>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -199,146 +200,52 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="about" className="py-32 px-6 md:px-12 bg-muted/30">
-        <div className="max-w-6xl mx-auto">
-          <h2 className="text-5xl md:text-7xl font-light mb-20">О студии</h2>
-          
-          <div className="grid md:grid-cols-2 gap-20 mb-32">
-            <div>
-              <h3 className="text-3xl font-light mb-8">Философия</h3>
-              <p className="text-lg text-muted-foreground leading-relaxed mb-6">
-                Мы верим, что настоящий дизайн рождается на пересечении эстетики и функциональности. 
-                Каждый проект для нас — это возможность создать что-то уникальное и значимое.
-              </p>
-              <p className="text-lg text-muted-foreground leading-relaxed">
-                Наша работа начинается с глубокого понимания потребностей клиента и заканчивается 
-                решением, которое превосходит ожидания.
-              </p>
-            </div>
-            
-            <div>
-              <h3 className="text-3xl font-light mb-8">Подход</h3>
-              <p className="text-lg text-muted-foreground leading-relaxed mb-6">
-                Минимализм для нас — не просто стиль, а способ мышления. Мы убираем всё лишнее, 
-                оставляя только то, что действительно важно и работает.
-              </p>
-              <p className="text-lg text-muted-foreground leading-relaxed">
-                Внимание к деталям, качество исполнения и индивидуальный подход к каждому проекту — 
-                основа нашей работы.
-              </p>
-            </div>
-          </div>
-
-          <div className="mb-32">
-            <h3 className="text-4xl font-light mb-16">Команда</h3>
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-12">
-              {team.map((member, index) => (
-                <div key={index}>
-                  <div className="aspect-[3/4] bg-muted mb-6"></div>
-                  <h4 className="text-xl font-medium mb-2">{member.name}</h4>
-                  <p className="text-muted-foreground mb-1">{member.role}</p>
-                  <p className="text-sm text-muted-foreground">{member.experience} опыта</p>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <div className="py-20 border-t border-border">
-            <div className="grid md:grid-cols-3 gap-12 text-center">
-              <div>
-                <div className="text-5xl font-light mb-4">150+</div>
-                <p className="text-muted-foreground">Реализованных проектов</p>
-              </div>
-              <div>
-                <div className="text-5xl font-light mb-4">8</div>
-                <p className="text-muted-foreground">Лет на рынке</p>
-              </div>
-              <div>
-                <div className="text-5xl font-light mb-4">25</div>
-                <p className="text-muted-foreground">Международных наград</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section id="services" className="py-32 px-6 md:px-12">
+      <section id="services" className="py-32 px-6 md:px-12 bg-muted/30">
         <div className="max-w-7xl mx-auto">
-          <h2 className="text-5xl md:text-7xl font-light mb-12">Услуги</h2>
-          <p className="text-xl text-muted-foreground max-w-3xl mb-32 font-light">
-            Мы предлагаем комплексные решения в области дизайна — от архитектурных проектов 
-            до создания цифровых продуктов.
-          </p>
+          <h2 className="text-5xl md:text-7xl font-light mb-12">Наши навыки</h2>
 
-          <div className="space-y-24">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {services.map((service, index) => (
               <div 
                 key={index} 
-                className="grid md:grid-cols-2 gap-12 items-start pb-24 border-b border-border last:border-0"
+                className="p-8 bg-background hover:shadow-lg transition-shadow"
               >
-                <div>
-                  <div className="w-16 h-16 bg-primary text-primary-foreground flex items-center justify-center mb-8">
-                    <Icon name={service.icon} size={32} />
-                  </div>
-                  <h3 className="text-4xl font-light mb-6">{service.title}</h3>
-                  <p className="text-lg text-muted-foreground leading-relaxed">
-                    {service.description}
-                  </p>
+                <div className="w-12 h-12 bg-primary text-primary-foreground flex items-center justify-center mb-6">
+                  <Icon name={service.icon} size={24} />
                 </div>
-                
-                <div className="md:pt-20">
-                  <h4 className="text-xl font-medium mb-6">Что входит:</h4>
-                  <ul className="space-y-4">
-                    {service.features.map((feature, idx) => (
-                      <li key={idx} className="flex items-start gap-3">
-                        <Icon name="Check" size={20} className="text-primary mt-1 flex-shrink-0" />
-                        <span className="text-muted-foreground">{feature}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+                <h3 className="text-2xl font-light mb-4">{service.title}</h3>
+                <p className="text-muted-foreground mb-6 leading-relaxed">
+                  {service.description}
+                </p>
+                <ul className="space-y-2">
+                  {service.features.map((feature, idx) => (
+                    <li key={idx} className="flex items-start gap-2 text-sm text-muted-foreground">
+                      <Icon name="Check" size={16} className="text-primary mt-0.5 flex-shrink-0" />
+                      <span>{feature}</span>
+                    </li>
+                  ))}
+                </ul>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      <section id="blog" className="py-32 px-6 md:px-12 bg-muted/30">
-        <div className="max-w-7xl mx-auto">
-          <h2 className="text-5xl md:text-7xl font-light mb-12">Блог</h2>
-          <p className="text-xl text-muted-foreground max-w-3xl mb-32 font-light">
-            Делимся мыслями о дизайне, архитектуре и всём, что нас вдохновляет.
+      <section id="about" className="py-32 px-6 md:px-12">
+        <div className="max-w-4xl mx-auto text-center">
+          <h2 className="text-5xl md:text-7xl font-light mb-12">О студии</h2>
+          <p className="text-xl text-muted-foreground leading-relaxed mb-8">
+            Forma — это команда дизайнеров, которые работают на результат. 
+            Мы не просто делаем красиво — мы создаём инструменты для вашего бизнеса.
           </p>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-20">
-            {blogPosts.map((post) => (
-              <article key={post.id} className="group cursor-pointer">
-                <div className="aspect-[4/3] bg-muted mb-6 overflow-hidden">
-                  <div className="w-full h-full bg-gradient-to-br from-muted to-muted-foreground/10 transition-transform duration-700 group-hover:scale-105"></div>
-                </div>
-                
-                <div className="flex items-center gap-3 mb-4 text-sm text-muted-foreground">
-                  <span>{post.category}</span>
-                  <span>•</span>
-                  <span>{post.readTime}</span>
-                </div>
-                
-                <h3 className="text-2xl font-light mb-4 group-hover:text-primary transition-colors">
-                  {post.title}
-                </h3>
-                
-                <p className="text-muted-foreground mb-4 leading-relaxed">
-                  {post.excerpt}
-                </p>
-                
-                <time className="text-sm text-muted-foreground">{post.date}</time>
-              </article>
-            ))}
-          </div>
+          <p className="text-xl text-muted-foreground leading-relaxed">
+            Наш подход: быстро погружаемся в задачу, работаем в едином стиле, 
+            делаем всё под ключ. От первого макета до финальной вёрстки.
+          </p>
         </div>
       </section>
 
-      <section id="contact" className="py-32 px-6 md:px-12">
+      <section id="contact" className="py-32 px-6 md:px-12 bg-muted/30">
         <div className="max-w-7xl mx-auto">
           <h2 className="text-5xl md:text-7xl font-light mb-32">Контакты</h2>
 
@@ -380,7 +287,7 @@ export default function Home() {
                 
                 <div>
                   <Textarea
-                    placeholder="Расскажите о вашем проекте"
+                    placeholder="Расскажите о вашей задаче"
                     value={formData.message}
                     onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                     required
@@ -390,18 +297,18 @@ export default function Home() {
                 </div>
                 
                 <Button type="submit" size="lg" className="w-full md:w-auto px-12">
-                  Отправить
+                  Отправить заявку
                 </Button>
               </form>
             </div>
 
             <div className="space-y-12">
               <div>
-                <h4 className="text-2xl font-light mb-8">Офис</h4>
+                <h4 className="text-2xl font-light mb-8">Контактная информация</h4>
                 <div className="space-y-6 text-muted-foreground">
                   <div className="flex gap-4">
-                    <Icon name="MapPin" size={24} className="flex-shrink-0" />
-                    <p>Москва, ул. Тверская, 15<br />Бизнес-центр "Форма", 7 этаж</p>
+                    <Icon name="Mail" size={24} className="flex-shrink-0" />
+                    <p>hello@forma.design</p>
                   </div>
                   
                   <div className="flex gap-4">
@@ -410,8 +317,8 @@ export default function Home() {
                   </div>
                   
                   <div className="flex gap-4">
-                    <Icon name="Mail" size={24} className="flex-shrink-0" />
-                    <p>hello@forma.design</p>
+                    <Icon name="MessageCircle" size={24} className="flex-shrink-0" />
+                    <p>Telegram: @forma_design</p>
                   </div>
                 </div>
               </div>
@@ -420,8 +327,7 @@ export default function Home() {
                 <h4 className="text-2xl font-light mb-8">Время работы</h4>
                 <div className="space-y-3 text-muted-foreground">
                   <p>Понедельник — Пятница: 10:00 — 19:00</p>
-                  <p>Суббота: 11:00 — 16:00</p>
-                  <p>Воскресенье: Выходной</p>
+                  <p>Суббота — Воскресенье: По договорённости</p>
                 </div>
               </div>
 
@@ -432,13 +338,10 @@ export default function Home() {
                     <Icon name="Instagram" size={24} />
                   </a>
                   <a href="#" className="hover:text-primary transition-colors">
-                    <Icon name="Facebook" size={24} />
-                  </a>
-                  <a href="#" className="hover:text-primary transition-colors">
                     <Icon name="Linkedin" size={24} />
                   </a>
                   <a href="#" className="hover:text-primary transition-colors">
-                    <Icon name="Twitter" size={24} />
+                    <Icon name="Send" size={24} />
                   </a>
                 </div>
               </div>
