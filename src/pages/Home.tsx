@@ -93,6 +93,11 @@ export default function Home() {
     ? projects 
     : projects.filter(p => p.category === activeCategory);
 
+  const scrollToSection = (sectionId: string) => {
+    const element = document.getElementById(sectionId);
+    element?.scrollIntoView({ behavior: 'smooth' });
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
@@ -228,9 +233,9 @@ export default function Home() {
       <section id="services" className="py-32 px-6 md:px-12 bg-gradient-to-b from-background to-muted/20">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-20">
-            <h2 className="text-5xl md:text-7xl font-bold mb-6">Наши навыки</h2>
+            <h2 className="text-5xl md:text-7xl font-bold mb-6">Услуги</h2>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              Полный спектр дизайн-услуг для вашего бизнеса
+              Всё, что нужно вашему бренду
             </p>
           </div>
 
@@ -238,22 +243,18 @@ export default function Home() {
             {services.map((service, index) => (
               <div 
                 key={index} 
-                className="group p-8 bg-card rounded-2xl border border-border hover:border-primary hover:shadow-xl transition-all duration-300"
+                className="group p-8 bg-card rounded-2xl border-2 border-border hover:border-primary hover:scale-[1.02] hover:shadow-lg transition-all duration-300"
               >
-                <div className="w-14 h-14 bg-gradient-to-br from-primary to-accent text-primary-foreground flex items-center justify-center rounded-xl mb-6 group-hover:scale-110 transition-transform shadow-md">
-                  <Icon name={service.icon} size={28} />
-                </div>
-                <h3 className="text-2xl font-semibold mb-4 group-hover:text-primary transition-colors">{service.title}</h3>
+                <Icon name={service.icon} size={32} className="text-primary mb-6" />
+                <h3 className="text-2xl font-bold mb-4">{service.title}</h3>
                 <p className="text-muted-foreground mb-6 leading-relaxed">
                   {service.description}
                 </p>
                 <ul className="space-y-3">
                   {service.features.map((feature, idx) => (
                     <li key={idx} className="flex items-start gap-3 text-sm">
-                      <div className="w-5 h-5 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0 mt-0.5">
-                        <Icon name="Check" size={14} className="text-primary" />
-                      </div>
-                      <span className="text-muted-foreground">{feature}</span>
+                      <Icon name="Check" size={16} className="text-primary flex-shrink-0 mt-0.5" />
+                      <span>{feature}</span>
                     </li>
                   ))}
                 </ul>
@@ -264,36 +265,115 @@ export default function Home() {
       </section>
 
       <section id="about" className="py-32 px-6 md:px-12">
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-5xl md:text-7xl font-bold mb-12">О студии</h2>
-          <p className="text-xl md:text-2xl text-muted-foreground leading-relaxed mb-8">
-            Forma — это команда дизайнеров, которые работают на результат. 
-            Мы не просто делаем красиво — мы создаём инструменты для вашего бизнеса.
-          </p>
-          <p className="text-xl md:text-2xl text-muted-foreground leading-relaxed">
-            Наш подход: быстро погружаемся в задачу, работаем в едином стиле, 
-            делаем всё под ключ. От первого макета до финальной вёрстки.
-          </p>
+        <div className="max-w-7xl mx-auto">
+          <div className="grid md:grid-cols-2 gap-16 items-center">
+            <div className="aspect-square bg-muted rounded-3xl overflow-hidden">
+              <img 
+                src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=800&h=800&fit=crop" 
+                alt="Команда Forma"
+                className="w-full h-full object-cover"
+              />
+            </div>
+            
+            <div>
+              <h2 className="text-5xl md:text-6xl font-bold mb-6">О студии</h2>
+              <p className="text-lg text-muted-foreground leading-relaxed mb-6">
+                Мы — команда дизайнеров, разработчиков и стратегов, которые создают визуальные решения для современного бизнеса. Работаем быстро, думаем глубоко.
+              </p>
+              <p className="text-lg text-muted-foreground leading-relaxed mb-12">
+                Наш подход — чистота, простота и функциональность. Никаких лишних деталей. Только то, что работает и приносит результат.
+              </p>
+              
+              <div>
+                <h3 className="text-2xl font-bold mb-6">Почему выбирают нас</h3>
+                <div className="space-y-6">
+                  <div className="flex gap-4">
+                    <Icon name="Zap" size={24} className="text-primary flex-shrink-0" />
+                    <div>
+                      <h4 className="font-semibold mb-1">Скорость</h4>
+                      <p className="text-muted-foreground">Средний срок — 48 часов. Работаем быстро, не теряя качество.</p>
+                    </div>
+                  </div>
+                  <div className="flex gap-4">
+                    <Icon name="Award" size={24} className="text-primary flex-shrink-0" />
+                    <div>
+                      <h4 className="font-semibold mb-1">Качество</h4>
+                      <p className="text-muted-foreground">Каждый проект проходит контроль качества. Никаких компромиссов.</p>
+                    </div>
+                  </div>
+                  <div className="flex gap-4">
+                    <Icon name="RefreshCw" size={24} className="text-primary flex-shrink-0" />
+                    <div>
+                      <h4 className="font-semibold mb-1">Гибкость</h4>
+                      <p className="text-muted-foreground">Вносим правки и адаптируем решения под ваши задачи.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
-      <section id="contact" className="py-32 px-6 md:px-12 bg-gradient-to-b from-muted/20 to-background">
+      <section id="contact" className="py-32 px-6 md:px-12 bg-gradient-to-b from-background to-muted/20">
         <div className="max-w-7xl mx-auto">
-          <h2 className="text-5xl md:text-7xl font-bold mb-20 text-center">Контакты</h2>
-
           <div className="grid md:grid-cols-2 gap-16">
-            <div className="bg-card rounded-2xl p-10 border border-border shadow-lg">
-              <h3 className="text-3xl font-semibold mb-8">Свяжитесь с нами</h3>
+            <div>
+              <h2 className="text-5xl md:text-6xl font-bold mb-6">Начнём проект?</h2>
+              <p className="text-lg text-muted-foreground mb-12 leading-relaxed">
+                Напишите нам — обсудим вашу задачу и предложим решение. Отвечаем в течение часа.
+              </p>
               
-              <form onSubmit={handleSubmit} className="space-y-6">
+              <div className="space-y-6 mb-12">
+                <div className="flex items-center gap-4">
+                  <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
+                    <Icon name="Phone" size={20} className="text-primary" />
+                  </div>
+                  <div>
+                    <p className="text-sm text-muted-foreground mb-1">Телефон</p>
+                    <a href="tel:+74951234567" className="text-lg font-medium hover:text-primary transition-colors">
+                      +7 (495) 123-45-67
+                    </a>
+                  </div>
+                </div>
+                
+                <div className="flex items-center gap-4">
+                  <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
+                    <Icon name="Mail" size={20} className="text-primary" />
+                  </div>
+                  <div>
+                    <p className="text-sm text-muted-foreground mb-1">Email</p>
+                    <a href="mailto:hello@forma.design" className="text-lg font-medium hover:text-primary transition-colors">
+                      hello@forma.design
+                    </a>
+                  </div>
+                </div>
+                
+                <div className="flex items-center gap-4">
+                  <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
+                    <Icon name="Send" size={20} className="text-primary" />
+                  </div>
+                  <div>
+                    <p className="text-sm text-muted-foreground mb-1">Telegram</p>
+                    <a href="https://t.me/forma_design" className="text-lg font-medium hover:text-primary transition-colors">
+                      @forma_design
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-card rounded-3xl p-8 border-2 shadow-lg">
+              <h3 className="text-2xl font-semibold mb-6">Отправить сообщение</h3>
+              
+              <form onSubmit={handleSubmit} className="space-y-5">
                 <div>
-                  <label className="block text-sm font-medium mb-2">Ваше имя</label>
+                  <label className="block text-sm font-medium mb-2">Имя</label>
                   <Input
-                    placeholder="Иван Иванов"
+                    placeholder="Ваше имя"
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                     required
-                    className="h-12"
                   />
                 </div>
                 
@@ -301,11 +381,10 @@ export default function Home() {
                   <label className="block text-sm font-medium mb-2">Email</label>
                   <Input
                     type="email"
-                    placeholder="ivan@example.com"
+                    placeholder="your@email.com"
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                     required
-                    className="h-12"
                   />
                 </div>
                 
@@ -316,99 +395,25 @@ export default function Home() {
                     placeholder="+7 (999) 123-45-67"
                     value={formData.phone}
                     onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                    className="h-12"
                   />
                 </div>
                 
                 <div>
-                  <label className="block text-sm font-medium mb-2">Расскажите о вашей задаче</label>
+                  <label className="block text-sm font-medium mb-2">Сообщение</label>
                   <Textarea
-                    placeholder="Опишите, что вам нужно..."
+                    placeholder="Расскажите о вашем проекте"
                     value={formData.message}
                     onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                     required
-                    rows={6}
-                    className="resize-none"
+                    rows={4}
                   />
                 </div>
                 
-                <Button type="submit" size="lg" className="w-full shadow-lg hover:shadow-xl transition-all">
-                  Отправить заявку
+                <Button type="submit" size="lg" className="w-full">
+                  Отправить сообщение
                   <Icon name="Send" className="ml-2" size={18} />
                 </Button>
               </form>
-            </div>
-
-            <div className="space-y-10">
-              <div className="bg-card rounded-2xl p-8 border border-border">
-                <h4 className="text-2xl font-semibold mb-6 flex items-center gap-3">
-                  <Icon name="MapPin" size={24} className="text-primary" />
-                  Контактная информация
-                </h4>
-                <div className="space-y-5">
-                  <div className="flex gap-4 items-start">
-                    <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
-                      <Icon name="Mail" size={20} className="text-primary" />
-                    </div>
-                    <div>
-                      <p className="font-medium mb-1">Email</p>
-                      <p className="text-muted-foreground">hello@forma.design</p>
-                    </div>
-                  </div>
-                  
-                  <div className="flex gap-4 items-start">
-                    <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
-                      <Icon name="Phone" size={20} className="text-primary" />
-                    </div>
-                    <div>
-                      <p className="font-medium mb-1">Телефон</p>
-                      <p className="text-muted-foreground">+7 (495) 123-45-67</p>
-                    </div>
-                  </div>
-                  
-                  <div className="flex gap-4 items-start">
-                    <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
-                      <Icon name="MessageCircle" size={20} className="text-primary" />
-                    </div>
-                    <div>
-                      <p className="font-medium mb-1">Telegram</p>
-                      <p className="text-muted-foreground">@forma_design</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="bg-card rounded-2xl p-8 border border-border">
-                <h4 className="text-2xl font-semibold mb-6 flex items-center gap-3">
-                  <Icon name="Clock" size={24} className="text-primary" />
-                  Время работы
-                </h4>
-                <div className="space-y-3 text-muted-foreground">
-                  <p className="flex justify-between">
-                    <span>Понедельник — Пятница</span>
-                    <span className="font-medium">10:00 — 19:00</span>
-                  </p>
-                  <p className="flex justify-between">
-                    <span>Суббота — Воскресенье</span>
-                    <span className="font-medium">По договорённости</span>
-                  </p>
-                </div>
-              </div>
-
-              <div className="bg-card rounded-2xl p-8 border border-border">
-                <h4 className="text-2xl font-semibold mb-6">Социальные сети</h4>
-                <div className="flex gap-4">
-                  <a href="#" className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-all">
-                    <Icon name="Instagram" size={24} />
-                  </a>
-                  <a href="#" className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-all">
-                    <Icon name="Linkedin" size={24} />
-                  </a>
-                  <a href="#" className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-all">
-                    <Icon name="Send" size={24} />
-                  </a>
-                </div>
-              </div>
             </div>
           </div>
         </div>
